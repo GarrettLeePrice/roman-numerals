@@ -9,15 +9,81 @@
 
 
 //roman conversion function
-function toRoman(number) {
-  var romanResult = " "
-  decimals = [1000, 500, 100, 50, 10, 5, 1],
-  roman = ['M', 'D', 'C', 'L', 'X', 'V', 'I'];
-   for (var i = 0; i < decimals.length; i++) {
-     while (number >= decimals[i]) {
-       romanResult += roman[i];
-       number -= decimals[i];
-     }
-  }
-  return romanResult;
+// function toRoman(number) {
+//
+//
+//   var romanResult = " "
+//   decimals = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1],
+//   roman = ['M', 'CM', 'D', 'CD', 'C', 'XC' 'L', 'XL', 'X', 'IX' 'V', 'IV', 'I'];
+//    for (var i = 0; i < decimals.length; i++) {
+//      while (number >= decimals[i]) {
+//        romanResult += roman[i];
+//        number -= decimals[i];
+//      }
+//   }
+//   return romanResult;
+// }
+//business logic
+
+function romanConvert(num) {
+  // alert(num);
+  if (typeof num !== 'number')
+  return false;
+  var digits = String(+num).split(""),
+    key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+    "","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+    "","I","II","III","IV","V","VI","VII","VIII","IX"],
+    roman_num = "",
+    i = 3;
+  while (i--)
+  roman_num += (key[+digits.pop() + (i * 10)] || "");
+  return Array(+digits.join("") + 1).join("M") + roman_num;
 }
+
+// console.log(romanConvert());
+
+//user interface logic
+
+$(document).ready(function() {
+  $("#romanForm").submit(function(event) {
+    var rInput = parseInt($("#romanInput").val());
+    var rResult = romanConvert(rInput);
+    $("#romanResult").text(rResult);
+      event.preventDefault();
+  });
+});
+
+// var isLeap = function(whatYear) {
+//   if ((whatYear % 100 === 0) && (whatYear % 400 !== 0)) {
+//     return false;
+//   } else  if (whatYear % 4 === 0) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// ......
+//   $(document).ready(function() {
+//   $("#leapForm").submit(function(event) {
+//     var yearInput = parseInt($("#leapInput").val());
+//     var lResult = isLeap(yearInput);
+//     $("#leapResult").text(lResult);
+//     event.preventDefault();
+//   });
+//
+//
+//   <div class="container">
+//     <h2>Leap Year</h2>
+//     <form id="leapForm">
+//       <div class="form-group">
+//         <label for="leapInput">Enter a year: </label>
+//         <input type="number" id="leapInput" placeholder="Year here, y'hear?" class="form-control" required>
+//       </div>
+//       <button type="submit" name="button" class="btn btn-warning">Quantum Leap Year</button>
+//     </form>
+//     <h3 id="leapResult"></h3>
+//   </div>
+// });
+//
+// $("form#submitBtn").click(function(){
+//   var num = $("#input").val();
+//   $("#romanResult").text(integer_to_roman);
